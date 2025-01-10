@@ -4,12 +4,18 @@ global $conn;
 include('config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $token = $_POST['token'];
-    $new_password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
+    $token = trim($_POST['token']);
+    $new_password = trim($_POST['new_password']);
+    $confirm_password = trim($_POST['confirm_password']);
+
+    if (empty($token) || empty($new_password) || empty($confirm_password)) {
+        echo "All fields are required.";
+        exit();
+    }
 
     if ($new_password !== $confirm_password) {
-        die("Passwords do not match.");
+        echo "Passwords do not match. Please try again.";
+        exit();
     }
 
     // Kontrollo nëse token ekziston në databazë
@@ -19,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 0) {
-        die("Invalid or expired token.");
+        echo "Invalid or expired token.";
+        exit();
     }
 
     // Hash fjalëkalimin e ri
@@ -39,3 +46,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+

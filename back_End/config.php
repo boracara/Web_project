@@ -5,7 +5,7 @@ $password = ""; // Lëre bosh nëse nuk ke fjalëkalim për MySQL
 $dbname = "platforma_db"; // Emri i saktë i bazës së të dhënave
 
 // Krijo lidhjen
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname, 3306);
 
 // Kontrollo lidhjen
 if ($conn->connect_error) {

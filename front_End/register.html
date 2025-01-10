@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<form action="../back_End/registerB.php" method="post" onsubmit="return validateForm()">
+    <h2>Register</h2>
+
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name" required>
+
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="birthdate">Birthdate</label>
+    <input type="date" id="birthdate" name="birthdate" required>
+
+    <label>Gender</label>
+    <div class="gender-options">
+        <input type="radio" id="male" name="gender" value="Male" required>
+        <label for="male">Male</label>
+
+        <input type="radio" id="female" name="gender" value="Female" required>
+        <label for="female">Female</label>
+
+        <input type="radio" id="rather_not_say" name="gender" value="Rather not say" required>
+        <label for="rather_not_say">Rather not say</label>
+    </div>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" id="confirm_password" name="confirm_password" required>
+
+    <label for="admin_code">Admin Code (optional)</label>
+    <input type="text" id="admin_code" name="admin_code">
+
+    <button type="submit">Register</button>
+    <footer>Already have an account? <a href="login.html">Login</a></footer>
+</form>
+<div id="error_message" style="color: red; margin-bottom: 10px;"></div>
+
+<script>
+    // JavaScript për validimin e formës
+    function validateForm() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm_password").value;
+
+        function validateForm() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm_password").value;
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            if (!passwordRegex.test(password)) {
+                alert("Password must be at least 8 characters long, start with an uppercase letter, and contain at least one number, one special character, and one letter.");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return false;
+            }
+
+            return true;
+        }
+    }
+</script>
+</body>
+</html>

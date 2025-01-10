@@ -1,0 +1,115 @@
+/* Sfondi i faqes */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Import i fonts ose stileve të tjera */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #001f3f; /* Errësirë navy */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+/* Forma */
+form {
+    background: #ffffff;
+    padding: 30px 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+/* Titulli i formës */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #001f3f;
+}
+
+/* Label-et */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Fushat e input-it */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Fokusimi në fushat e input-it */
+input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Butoni */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer dhe lidhja */
+footer {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ddd;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Opsionet e gjinisë në një rresht */
+.gender-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.gender-options input {
+    margin-right: 5px;
+}
+/* Sfondi i faqes */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #001f3f; /* Navy e errët */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+

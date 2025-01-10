@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d75f9192-135c-4855-bd65-05f7e655e465" name="https://github.com/boracara/Web_project.git" url="https://github.com/boracara/Web_project.git">
+        <fileTransfer accessType="LOCAL" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>

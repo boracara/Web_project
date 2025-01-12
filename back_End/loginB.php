@@ -14,6 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND is_verified = 1");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Lejo logimin
+    } else {
+        echo "Your email is not verified. Please check your inbox.";
+    }
 
     // Kontrollo nëse përdoruesi ekziston
     if ($result->num_rows > 0) {
@@ -27,11 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Ridrejto sipas rolit
             if ($user['role'] === 'admin') {
-                header("Location: admin_dashboard.php");
+                header("Location: /Web_project/back_End/admin_dashboard.php"); // Ridrejtim për admin
             } else {
-                header("Location: user_dashboard.php");
+                header("Location: /Web_project/back_End/user_dashboard.php"); // Ridrejtim për user
             }
             exit();
+
         } else {
             echo "Incorrect password.";
         }

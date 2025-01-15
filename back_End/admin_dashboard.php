@@ -1,15 +1,19 @@
-
 <?php
-global$conn;
-//Skedari: admin_dashboard.php
+global $conn;
 session_start();
+require 'config.php';
+
+
+
+// Kontrollo nëse përdoruesi është administrator
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: /Web_project/front_End/login.html");
+    header("Location: ../front_End/login.html");
     exit();
 }
 
-include(__DIR__ . '/config.php');
-$result = $conn->query("SELECT id, first_name, last_name, email, role FROM users");
+// Merr listën e të gjithë përdoruesve
+$query = "SELECT id, first_name, last_name, email, role FROM users";
+$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -17,76 +21,41 @@ $result = $conn->query("SELECT id, first_name, last_name, email, role FROM users
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f9;
-        }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #d9534f;
-        }
-    </style>
+    <link rel="stylesheet" href="/Web_project/front_End/user.css">
+    <title>Lista e Përdoruesve</title>
 </head>
 <body>
-<div class="container">
-    <h1>Admin Dashboard - Registered Users</h1>
-    <table>
+<h1>Lista e Përdoruesve</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Emri</th>
+        <th>Mbiemri</th>
+        <th>Email</th>
+        <th>Roli</th>
+        <th>Veprime</th>
+    </tr>
+    <?php while ($row = $result->fetch_assoc()): ?>
         <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Role</th>
+            <td><?= $row['id'] ?></td>
+            <td><?= htmlspecialchars($row['first_name']) ?></td>
+            <td><?= htmlspecialchars($row['last_name']) ?></td>
+            <td><?= htmlspecialchars($row['email']) ?></td>
+            <td><?= htmlspecialchars($row['role']) ?></td>
+            <td>
+                <a href="../back_End/user_dashboard.php?id=<?= $row['id'] ?>">Shiko</a> |
+                <a href="../back_End/edit_user.php?id=<?= $row['id'] ?>">Modifiko</a> |
+                <a href="../back_End/delete_user.php?id=<?= $row['id'] ?>" onclick="return confirm('Jeni të sigurt?')">Fshij</a>
+            </td>
         </tr>
-        <?php while ($user = $result->fetch_assoc()) { ?>
-            <tr>
-                <td><?php echo htmlspecialchars($user['id']); ?></td>
-                <td><?php echo htmlspecialchars($user['first_name']); ?></td>
-                <td><?php echo htmlspecialchars($user['last_name']); ?></td>
-                <td><?php echo htmlspecialchars($user['email']); ?></td>
-                <td><?php echo htmlspecialchars($user['role']); ?></td>
-            </tr>
-        <?php } ?>
-    </table>
-    <a href="logout.php">Log Out</a>
-</div>
+    <?php endwhile; ?>
+</table>
+<a href="../back_End/add_user.php">Shto Përdorues</a>
+<nav>
+    <ul>
+        <li><a href="../back_End/admin_analysis.php">Analiza e Përdoruesve</a></li>
+    </ul>
+</nav>
+
 </body>
 </html>
-
-<?php
-// Skedari: logout.php
-session_start();
-session_destroy();
-header("Location: /Web_project/front_End/login.html");
-exit();
-?>

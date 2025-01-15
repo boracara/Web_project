@@ -1,5 +1,5 @@
 <?php
-global $conn;
+global $conn, $query;
 include('config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,7 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender = $_POST['gender'];
     $password = $_POST['password'];
     $admin_code = $_POST['admin_code'] ?? '';
-
+    $profession = $conn->real_escape_string($_POST['employment_field']);
+    $description = $conn->real_escape_string($_POST['description']);
     // Kontrollo vlefshmërinë e email-it
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         die("Emaili është i pavlefshëm.");
@@ -42,6 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insert_query);
     $stmt->bind_param("ssssssss", $first_name, $last_name, $email, $birthdate, $gender, $hashed_password, $role, $verification_code);
+if ($conn->query($query)) {
+    $user_id = $conn->insert_id;
+
+    // Ruajtja e profesionit dhe përshkrimit në tabelën `user_profiles`
+    $profile_query = "INSERT INTO user_profiles (user_id, profession, description) 
+                          VALUES ('$user_id', '$profession', '$description')";
+    $conn->query($profile_query);
 
     if ($stmt->execute()) {
         // Dërgo kodin e verifikimit në email
@@ -68,5 +76,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     header("Location: /front_End/register.html");
     exit();
-}
+}}
 ?>

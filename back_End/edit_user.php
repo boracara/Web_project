@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifiko Përdorues</title>
-    <link rel="stylesheet" href="../front_End/user.css">
+    <link rel="stylesheet" href="../front_End/adduser.css">
 </head>
 <body>
 <div class="profile-container">

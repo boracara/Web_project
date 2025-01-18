@@ -24,7 +24,7 @@ $age_result = $conn->query($age_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analiza e Përdoruesve</title>
-    <link rel="stylesheet" href="../front_End/user.css">
+    <link rel="stylesheet" href="../front_End/adduser.css">
 </head>
 <body>
 <div class="analysis-container">

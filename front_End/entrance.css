@@ -1,0 +1,95 @@
+/* General Styling */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #001f3f; /* Deep navy background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+/* Entrance Container */
+.entrance-container {
+    text-align: center;
+    background: linear-gradient(135deg, #0056b3, #007bff);
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    width: 500px;
+    position: relative;
+    color: white;
+}
+
+/* Logo Styling */
+.entrance-container img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+/* Title Styling */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Description */
+p {
+    font-size: 1.2rem;
+    color: #dfe6f0;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.button {
+    padding: 15px 30px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    background: #28a745; /* Green for Register */
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.button:hover {
+    background: #1e7e34;
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.login {
+    background: #ffc107; /* Yellow for Login */
+}
+
+.login:hover {
+    background: #e0a800;
+}
+
+/* Extra Links */
+.extra-links a {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #f8f9fa;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.extra-links a:hover {
+    color: #c4c4c4;
+}

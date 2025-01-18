@@ -21,7 +21,7 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Web_project/front_End/user.css">
+    <link rel="stylesheet" href="/Web_project/front_End/admin.css">
     <title>Lista e Përdoruesve</title>
 </head>
 <body>
@@ -51,6 +51,9 @@ $result = $conn->query($query);
     <?php endwhile; ?>
 </table>
 <a href="../back_End/add_user.php">Shto Përdorues</a>
+
+<a href="../back_End/admin_donations.php">View All Donations</a>
+
 <nav>
     <ul>
         <li><a href="../back_End/admin_analysis.php">Analiza e Përdoruesve</a></li>

@@ -50,10 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Ngarkimi i fotos së profilit nëse ekziston një foto e re
     if (!empty($_FILES['profile_picture']['name'])) {
-        $target_dir = "uploads/";
+        $target_dir = "../uploads/"; // Rruga drejt direktorisë së ngarkimit
         $profile_picture = $target_dir . basename($_FILES['profile_picture']['name']);
         move_uploaded_file($_FILES['profile_picture']['tmp_name'], $profile_picture);
     }
+
 
     // Përditëso të dhënat në tabelën users
     $update_user_query = "UPDATE users SET first_name = '$first_name', last_name = '$last_name', email = '$email', birthdate = '$birthdate', gender = '$gender', profile_picture = '$profile_picture' WHERE id = '$user_id'";
@@ -67,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $insert_profile_query = "INSERT INTO user_profiles (user_id, profession, description) VALUES ('$user_id', '$profession', '$description')";
         $conn->query($insert_profile_query);
     }
+
 
     // Rifresko faqen
     header("Location: user_dashboard.php");
@@ -127,6 +129,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <label for="profile_picture">Foto e Profilit:</label><br>
             <input type="file" id="profile_picture" name="profile_picture"><br><br>
+
+
+            <a href="../front_End/donate.html" class="btn">Make a Donation</a>
+            <a href="../back_End/user_donations.php">View My Donations</a>
+
 
             <button type="submit">Përditëso</button>
         </form>

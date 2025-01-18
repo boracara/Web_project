@@ -1,82 +1,94 @@
-/* Sfondi i faqes */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Import i fonts ose stileve të tjera */
-
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #001f3f; /* Errësirë navy */
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #001f3f; /* Dark navy background */
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Lejon scroll nëse përmbajtja është më e gjatë se ekrani */
     color: white;
 }
 
-/* Forma */
+
+/* Form Styling */
 form {
-    background: #ffffff;
-    padding: 30px 50px;
+    background: #ffffff; /* White background for contrast */
+    padding: 30px 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     width: 400px;
+    max-width: 90%; /* Responsive for smaller screens */
 }
 
-/* Titulli i formës */
+/* Form Title */
 h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #001f3f;
+    font-size: 24px;
 }
 
-/* Label-et */
+/* Labels */
 label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #555;
+    color: #333;
 }
 
-/* Fushat e input-it */
+/* Input Fields */
 input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="date"],
-button {
+textarea,
+select {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    font-family: 'Roboto', Arial, sans-serif;
+    box-sizing: border-box;
 }
 
-/* Fokusimi në fushat e input-it */
-input:focus {
+/* Focus State */
+input:focus,
+textarea:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Butoni */
+/* Buttons */
 button {
+    width: 100%;
+    padding: 12px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    cursor: pointer;
+    border-radius: 5px;
     font-size: 18px;
     font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-/* Footer dhe lidhja */
+/* Footer Styling */
 footer {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
     font-size: 14px;
     color: #ddd;
 }
@@ -90,129 +102,39 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* Opsionet e gjinisë në një rresht */
+/* Gender Options Styling */
 .gender-options {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .gender-options input {
     margin-right: 5px;
 }
-/* Sfondi i faqes */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #001f3f; /* Navy e errët */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: white;
-}
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.admin-dashboard {
-    width: 80%;
-    margin: 20px auto;
-    text-align: center;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    background-color: #333;
-    padding: 10px;
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-}
-
-nav ul li a:hover {
-    background-color: #575757;
-    border-radius: 5px;
-}
-
-.analysis-container {
-    margin-top: 20px;
-    text-align: left;
-}
-
-.analysis-container h2 {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.analysis-container table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.analysis-container table, th, td {
-    border: 1px solid #ddd;
-}
-
-.analysis-container th, td {
-    padding: 10px;
-    text-align: center;
-}
-
-.analysis-container th {
-    background-color: #f4f4f4;
-}
-
-.analysis-container tr:nth-child(even) {
+/* Dropdown Styling */
+select {
+    appearance: none; /* Remove default browser styles */
     background-color: #f9f9f9;
+    padding: 12px;
+    border: 1px solid #ccc;
 }
 
-/* Stilizimi i fushave të reja në regjistrim */
-form label {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
+/* Textarea Styling */
+textarea {
+    resize: none; /* Disable resizing */
+    font-size: 16px;
 }
 
-form select, form textarea, form input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
+/* Responsive Adjustments */
+@media (max-width: 500px) {
+    form {
+        padding: 20px;
+    }
 
-form button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-form button:hover {
-    background-color: #45a049;
+    button {
+        font-size: 16px;
+    }
 }

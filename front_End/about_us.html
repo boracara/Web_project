@@ -4,13 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .about-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .about-container h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .about-container p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .about-container .features {
+            margin-top: 20px;
+            text-align: left;
+            background-color: #90b2e0;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .about-container .features ul {
+            list-style-type: square;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .about-container .features li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ffffff;
+            background: #6a11cb;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background: #2575fc;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-container h1 {
+                font-size: 2rem;
+            }
+
+            .about-container p {
+                font-size: 1rem;
+            }
+
+            .about-container .features li {
+                font-size: 0.9rem;
+            }
+
+            .button {
+                font-size: 0.9rem;
+                padding: 10px 18px;
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="about-container">
     <h1>About Us</h1>
-    <p>Welcome to our platform! We are committed to providing a user-friendly system for efficient user management, analytics, and more. Explore our features and experience the power of simplicity and functionality combined!</p>
+    <p>Welcome to our platform! Our mission is to provide a powerful and user-friendly system that simplifies daily operations for admins and users alike. With features designed for efficiency and scalability, we aim to make your experience seamless and productive.</p>
+    <div class="features">
+        <h2>Key Features:</h2>
+        <ul>
+            <li>Effortless user management with role-based access.</li>
+            <li>Interactive announcements and event registrations.</li>
+            <li>Real-time voting and feedback systems.</li>
+            <li>Detailed analytics for better decision-making.</li>
+            <li>Secure and scalable architecture for long-term reliability.</li>
+        </ul>
+    </div>
     <a href="entrance.html" class="button">Back to Home</a>
 </div>
 </body>
 </html>
+

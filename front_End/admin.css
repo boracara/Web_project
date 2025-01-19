@@ -7,10 +7,19 @@ body {
     color: white;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* Page Title */
 h1 {
     text-align: center;
-    color: #ffffff;
+    color: #007bff;
     margin-bottom: 20px;
 }
 
@@ -18,11 +27,11 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-bottom: 20px;
     background: #ffffff;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
@@ -33,7 +42,7 @@ th, td {
 }
 
 th {
-    background-color: #007bff; /* Bright blue header */
+    background-color: #007bff;
     color: white;
     font-weight: bold;
 }
@@ -47,35 +56,84 @@ tr:nth-child(even) td {
     background-color: #e9ecef;
 }
 
-/* Links in Table */
-a {
-    color: #007bff;
+/* Actions Column */
+.actions a {
     text-decoration: none;
+    font-size: 14px;
     font-weight: bold;
-    transition: color 0.3s;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-right: 5px;
 }
 
-a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* Add User Link */
-a[href$="add_user.php"] {
-    display: inline-block;
-    margin: 10px 0;
-    padding: 10px 20px;
-    background-color: #28a745; /* Green button for adding */
+.btn-view {
+    background-color: #17a2b8;
     color: white;
+}
+
+.btn-view:hover {
+    background-color: #138496;
+}
+
+.btn-edit {
+    background-color: #ffc107;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* Add User & Navigation Buttons */
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.buttons a {
+    text-decoration: none;
+    padding: 12px 20px;
     font-size: 16px;
     font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 4px;
+    margin: 0 10px;
+    display: inline-block;
 }
 
-a[href$="add_user.php"]:hover {
+.btn-add {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-add:hover {
     background-color: #218838;
+}
+
+.btn-announcement {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-announcement:hover {
+    background-color: #0056b3;
+}
+
+.btn-event {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.btn-event:hover {
+    background-color: #5a34a8;
 }
 
 /* Navigation Styling */
@@ -96,11 +154,13 @@ nav ul li a {
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
-    transition: color 0.3s;
+    background: #007bff;
+    padding: 10px 15px;
+    border-radius: 4px;
 }
 
 nav ul li a:hover {
-    color: #f1c40f;
+    background-color: #0056b3;
 }
 
 /* Responsive Design */

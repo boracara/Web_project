@@ -10,6 +10,7 @@ return array(
     'Unirest\\' => array($vendorDir . '/apimatic/unirest-php/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'PaypalServerSdkLib\\' => array($vendorDir . '/paypal/paypal-server-sdk/src'),
+    'PayPalHttp\\' => array($vendorDir . '/paypal/paypalhttp/lib/PayPalHttp'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Core\\' => array($vendorDir . '/apimatic/core/src'),
     'CoreInterfaces\\' => array($vendorDir . '/apimatic/core-interfaces/src'),

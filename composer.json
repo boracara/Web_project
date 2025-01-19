@@ -2,7 +2,8 @@
     "require": {
         "phpmailer/phpmailer": "^6.9",
       "ext-mysqli": "*",
-        "paypal/paypal-server-sdk": "^0.6.1"
+        "paypal/paypal-server-sdk": "^0.6.1",
+        "paypal/paypalhttp": "^1.0"
     }
 
 }

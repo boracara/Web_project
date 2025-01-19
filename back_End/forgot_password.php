@@ -4,7 +4,7 @@ global $conn;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php'; // Përfshi PHPMailer
+require '../vendor/autoload.php';
 
 include('config.php');
 
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 
-$mail->SMTPDebug = 3; // Ose 3 për më shumë detaje
+$mail->SMTPDebug = 3;
 $mail->Debugoutput = 'html';
 
 ?>

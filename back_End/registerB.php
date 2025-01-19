@@ -1,5 +1,5 @@
 <?php
-global $conn, $query;
+global $conn;
 include('config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,22 +12,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $admin_code = $_POST['admin_code'] ?? '';
     $profession = $conn->real_escape_string($_POST['employment_field']);
     $description = $conn->real_escape_string($_POST['description']);
+
     // Kontrollo vlefshmërinë e email-it
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         die("Emaili është i pavlefshëm.");
     }
 
     // Kontrollo fjalëkalimin për siguri
-    if (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password)) {
+    if (!preg_match('/^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$/', $password)) {
         die("Fjalëkalimi nuk plotëson kërkesat e sigurisë.");
     }
 
+    // Vendos rolin e përdoruesit
     $role = (strpos($email, '@companydomain.com') !== false) ? 'admin' : 'user';
     $valid_admin_code = "ADMIN123";
     if ($admin_code === $valid_admin_code) {
         $role = 'admin';
     }
 
+    // Kontrollo nëse emaili ekziston tashmë
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -36,22 +39,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Ky email ekziston tashmë!");
     }
 
-    $verification_code = rand(100000, 999999); // Gjenero kodin e verifikimit
+    // Gjenero kodin e verifikimit
+    $verification_code = rand(100000, 999999);
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
+    // Shto përdoruesin në databazë
     $insert_query = "INSERT INTO users (first_name, last_name, email, birthdate, gender, password, role, verification_code) 
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insert_query);
     $stmt->bind_param("ssssssss", $first_name, $last_name, $email, $birthdate, $gender, $hashed_password, $role, $verification_code);
-if ($conn->query($query)) {
-    $user_id = $conn->insert_id;
-
-    // Ruajtja e profesionit dhe përshkrimit në tabelën `user_profiles`
-    $profile_query = "INSERT INTO user_profiles (user_id, profession, description) 
-                          VALUES ('$user_id', '$profession', '$description')";
-    $conn->query($profile_query);
 
     if ($stmt->execute()) {
+        $user_id = $conn->insert_id;
+
+        // Ruajtja e profesionit dhe përshkrimit në tabelën `user_profiles`
+        $profile_query = "INSERT INTO user_profiles (user_id, profession, description) VALUES (?, ?, ?)";
+        $profile_stmt = $conn->prepare($profile_query);
+        $profile_stmt->bind_param("iss", $user_id, $profession, $description);
+        $profile_stmt->execute();
+
         // Dërgo kodin e verifikimit në email
         $to = $email;
         $subject = "Email Verification Code";
@@ -76,5 +82,5 @@ if ($conn->query($query)) {
 } else {
     header("Location: /front_End/register.html");
     exit();
-}}
+}
 ?>

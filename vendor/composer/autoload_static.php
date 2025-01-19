@@ -19,6 +19,7 @@ class ComposerStaticInitd751713988987e9331980363e24189ce
         array (
             'Psr\\Log\\' => 8,
             'PaypalServerSdkLib\\' => 19,
+            'PayPalHttp\\' => 11,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'C' => 
@@ -44,6 +45,10 @@ class ComposerStaticInitd751713988987e9331980363e24189ce
         'PaypalServerSdkLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/paypal/paypal-server-sdk/src',
+        ),
+        'PayPalHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypalhttp/lib/PayPalHttp',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (

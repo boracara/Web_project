@@ -88,44 +88,62 @@
 
 <div class="messages-container">
     <?php
-    global$conn;
-    include('config.php');
     session_start();
-
-    // Kontrollo sesionin
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: /front_End/login.html");
-        exit();
-    }
-
-    $user_email = $_SESSION['email']; // Emaili i përdoruesit të loguar
-    $receiver_email = $_GET['receiver_email'] ?? null; // Emaili i marrësit nga URL-ja
-
-    if (!$receiver_email) {
-        die("<div class='no-messages'>Emaili i marrësit nuk është i specifikuar.</div>");
-    }
+    require 'config.php';
+    global $conn;
 
     try {
-        // Merr mesazhet midis përdoruesit të loguar dhe marrësit
+        // Kontrollo nëse përdoruesi është loguar
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: ../front_End/login.html");
+            exit();
+        }
+
+        // Merr emailin e përdoruesit të loguar
+        $user_email = $_SESSION['email'] ?? null;
+
+        if (!$user_email) {
+            echo "<script>
+            alert('Emaili i përdoruesit nuk është i vendosur. Ju lutemi logohuni përsëri.');
+            window.location.href = '../front_End/login.html';
+        </script>";
+            exit();
+        }
+
+        // Merr emailin e marrësit nga URL ose përdor emailin e vetë përdoruesit si parazgjedhje
+        $receiver_email = $_GET['receiver_email'] ?? $user_email;
+
+        // Kontrollo nëse `receiver_email` është i vlefshëm
+        if (!$receiver_email) {
+            echo "<script>
+            alert('Emaili i marrësit nuk është i specifikuar.');
+            window.location.href = '../back_End/user_dashboard.php';
+        </script>";
+            exit();
+        }
+
+        // Merr mesazhet nga baza e të dhënave
         $stmt = $conn->prepare("
-            SELECT * FROM messages 
-            WHERE (sender_email = ? AND receiver_email = ?) 
-               OR (sender_email = ? AND receiver_email = ?)
-            ORDER BY timestamp ASC
-        ");
+        SELECT sender_email, receiver_email, message, timestamp 
+        FROM messages 
+        WHERE (sender_email = ? AND receiver_email = ?) 
+           OR (sender_email = ? AND receiver_email = ?)
+        ORDER BY timestamp ASC
+    ");
         $stmt->bind_param("ssss", $user_email, $receiver_email, $receiver_email, $user_email);
         $stmt->execute();
         $messages = $stmt->get_result();
 
+        // Shfaq mesazhet
         if ($messages->num_rows > 0) {
             echo '<h1 style="color: black;">Mesazhet e mia:</h1>';
             while ($msg = $messages->fetch_assoc()) {
                 echo "<div class='message'>
-                    <p><strong>From:</strong> " . htmlspecialchars($msg['sender_email']) . "</p>
-                    <p><strong>To:</strong> " . htmlspecialchars($msg['receiver_email']) . "</p>
-                    <p><strong>Message:</strong> " . htmlspecialchars($msg['message']) . "</p>
-                    <p><strong>Sent At:</strong> " . htmlspecialchars($msg['timestamp']) . "</p>
-                </div>";
+                <p><strong>From:</strong> " . htmlspecialchars($msg['sender_email']) . "</p>
+                <p><strong>To:</strong> " . htmlspecialchars($msg['receiver_email']) . "</p>
+                <p><strong>Message:</strong> " . htmlspecialchars($msg['message']) . "</p>
+                <p><strong>Sent At:</strong> " . htmlspecialchars($msg['timestamp']) . "</p>
+            </div>";
             }
         } else {
             echo "<div class='no-messages'>Nuk ka mesazhe për t'u shfaqur.</div>";
@@ -134,6 +152,7 @@
         echo "<div class='no-messages'>Gabim gjatë shfaqjes së mesazheve: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
     ?>
+
 </div>
 </body>
 </html>

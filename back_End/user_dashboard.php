@@ -3,25 +3,27 @@ global $conn;
 session_start();
 require 'config.php';
 
-
-// Kontrollo sesionin
+// Kontrollo nëse përdoruesi është loguar
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../front_End/login.html");
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
-$requested_user_id = $_GET['id'] ?? $user_id; // ID-ja e kërkuar nga URL-ja ose ID-ja e vetë përdoruesit
+// Merr ID-në e përdoruesit të kërkuar ose atë nga sesioni
+$requested_user_id = isset($_GET['id']) ? intval($_GET['id']) : $_SESSION['user_id'];
 
-// Lejo administratorët të aksesojnë të gjitha profilet
-if ($_SESSION['role'] !== 'admin' && $requested_user_id != $user_id) {
+// Kontrollo nëse përdoruesi ka të drejtë të aksesojë profilin
+if ($_SESSION['role'] !== 'admin' && $requested_user_id != $_SESSION['user_id']) {
     die("Nuk keni leje për të aksesuar këtë profil.");
 }
 
 // Merr të dhënat e përdoruesit nga tabela 'users'
-$query = "SELECT first_name, last_name, email, birthdate, gender, profile_picture FROM users WHERE id = ?";
+$query = "
+    SELECT first_name, last_name, email, birthdate, gender, profile_picture 
+    FROM users 
+    WHERE id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("i", $requested_user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
@@ -30,9 +32,12 @@ if (!$user) {
 }
 
 // Merr të dhënat nga tabela 'user_profiles'
-$profile_query = "SELECT profession, description FROM user_profiles WHERE user_id = ?";
+$profile_query = "
+    SELECT COALESCE(profession, '') AS profession, COALESCE(description, '') AS description 
+    FROM user_profiles 
+    WHERE user_id = ?";
 $stmt = $conn->prepare($profile_query);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("i", $requested_user_id);
 $stmt->execute();
 $user_profile = $stmt->get_result()->fetch_assoc();
 
@@ -41,7 +46,7 @@ if (!$user_profile) {
     $user_profile = ['profession' => '', 'description' => ''];
 }
 
-// Përditësimi i profilit
+// Përpunimi i të dhënave të formularit për përditësimin e profilit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $first_name = $conn->real_escape_string($_POST['first_name']);
     $last_name = $conn->real_escape_string($_POST['last_name']);
@@ -55,45 +60,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Ngarkimi i fotos së profilit nëse ekziston një foto e re
     if (!empty($_FILES['profile_picture']['name'])) {
         $target_dir = "../uploads/";
-        $profile_picture = $target_dir . basename($_FILES['profile_picture']['name']);
+        $file_extension = pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION);
+        $profile_picture = $target_dir . uniqid("profile_", true) . "." . $file_extension;
         move_uploaded_file($_FILES['profile_picture']['tmp_name'], $profile_picture);
     }
 
-    // Përditëso të dhënat në tabelën users
-    $update_user_query = "UPDATE users 
-                          SET first_name = ?, last_name = ?, email = ?, birthdate = ?, gender = ?, profile_picture = ? 
-                          WHERE id = ?";
+    // Përditëso të dhënat në tabelën 'users'
+    $update_user_query = "
+        UPDATE users 
+        SET first_name = ?, last_name = ?, email = ?, birthdate = ?, gender = ?, profile_picture = ? 
+        WHERE id = ?";
     $stmt = $conn->prepare($update_user_query);
-    $stmt->bind_param("ssssssi", $first_name, $last_name, $email, $birthdate, $gender, $profile_picture, $user_id);
+    $stmt->bind_param("ssssssi", $first_name, $last_name, $email, $birthdate, $gender, $profile_picture, $requested_user_id);
     $stmt->execute();
 
-    // Përditëso ose shto të dhënat në tabelën user_profiles
+    // Përditëso ose shto të dhënat në tabelën 'user_profiles'
     $profile_query = "SELECT * FROM user_profiles WHERE user_id = ?";
     $stmt = $conn->prepare($profile_query);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("i", $requested_user_id);
     $stmt->execute();
     $profile_result = $stmt->get_result();
 
     if ($profile_result->num_rows > 0) {
-        $update_profile_query = "UPDATE user_profiles 
-                                 SET profession = ?, description = ? 
-                                 WHERE user_id = ?";
+        $update_profile_query = "
+            UPDATE user_profiles 
+            SET profession = ?, description = ? 
+            WHERE user_id = ?";
         $stmt = $conn->prepare($update_profile_query);
-        $stmt->bind_param("ssi", $profession, $description, $user_id);
+        $stmt->bind_param("ssi", $profession, $description, $requested_user_id);
         $stmt->execute();
     } else {
-        $insert_profile_query = "INSERT INTO user_profiles (user_id, profession, description) 
-                                 VALUES (?, ?, ?)";
+        $insert_profile_query = "
+            INSERT INTO user_profiles (user_id, profession, description) 
+            VALUES (?, ?, ?)";
         $stmt = $conn->prepare($insert_profile_query);
-        $stmt->bind_param("iss", $user_id, $profession, $description);
+        $stmt->bind_param("iss", $requested_user_id, $profession, $description);
         $stmt->execute();
     }
 
-    // Rifresko faqen
-    header("Location: user_dashboard.php");
+    // Ridrejto te dashboard pas përditësimit
+    header("Location: ../back_End/user_dashboard.php?id=" . $requested_user_id);
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -123,11 +133,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="date" id="birthdate" name="birthdate" value="<?= htmlspecialchars($user['birthdate']) ?>" required><br><br>
 
             <label for="gender">Gender:</label><br>
-            <select id="gender" name="gender">
+            <select id="gender" name="gender" required>
                 <option value="male" <?= $user['gender'] == 'male' ? 'selected' : '' ?>>Male</option>
                 <option value="female" <?= $user['gender'] == 'female' ? 'selected' : '' ?>>Female</option>
                 <option value="rather_not_say" <?= $user['gender'] == 'rather_not_say' ? 'selected' : '' ?>>Rather not say</option>
             </select><br><br>
+
 
             <label for="profession">Employment Field:</label><br>
             <select id="profession" name="profession" required>
@@ -151,13 +162,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="user-actions">
                 <a href="../front_End/sendmessage.html?receiver_email=<?= urlencode($user['email']); ?>" class="button btn-primary">Dërgo Mesazh</a>
-                <a href="../back_End/messages.php?receiver_email=<?= urlencode($user['email']); ?>" class="button btn-secondary">Shiko Mesazhet e Mia</a>
+                <a href="../back_End/messages.php?receiver_email=<?= urlencode($_SESSION['email']); ?>" class="button btn-secondary">Shiko Mesazhet e Mia</a>
                 <a href="../back_End/announcements.php" class="button btn-info">Shiko Njoftimet nga ADMIN</a>
                 <a href="../back_End/events.php" class="button btn-success">Shiko Eventet</a>
             </div>
 
 
             <button type="submit">Përditëso</button>
+            <a href="../back_End/logout.php" class="logout-button">Log Out</a>
+
+            <a href="../front_End/entrance.html" class="button">Kthehu te Faqja Kryesore</a>
+
         </form>
     </div>
 </div>

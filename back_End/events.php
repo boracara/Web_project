@@ -135,8 +135,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
                 <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
                 <button type="submit">Regjistrohu</button>
             </form>
+
         </div>
     <?php endwhile; ?>
+    <a href="../back_End/user_dashboard.php" class="button btn-primary">Kthehu ne profili</a>
+
 </div>
 </body>
 </html>

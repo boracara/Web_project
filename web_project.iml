@@ -3,7 +3,16 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/vendor/apimatic/core" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/apimatic/core-interfaces" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/apimatic/jsonmapper" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/apimatic/unirest-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/paypal/paypal-server-sdk" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/paypal/paypalhttp" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-jsonpointer/php-jsonpointer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpmailer/phpmailer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

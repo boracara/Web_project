@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $query = "INSERT INTO users (first_name, last_name, email, password, role) VALUES ('$first_name', '$last_name', '$email', '$password', '$role')";
     if ($conn->query($query)) {
-        echo "Përdoruesi u shtua me sukses.";
+        echo "Përdoruesi u shtua me sukses." ;
         header("Location: admin_dashboard.php");
         exit();
     } else {

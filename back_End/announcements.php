@@ -135,7 +135,18 @@ $result = $conn->query($query);
             </div>
         </div>
     <?php endwhile; ?>
-    <a href="../back_End/admin_dashboard.php" class="button">Kthehu te Profili</a>
+
+    <?php
+    // Kontrollo rolin e përdoruesit nga sesioni
+    $redirect_url = "../back_End/user_dashboard.php"; // URL parazgjedhje për përdoruesit e zakonshëm
+
+    if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+        $redirect_url = "../back_End/admin_dashboard.php"; // URL për adminët
+    }
+    ?>
+
+    <a href="<?= htmlspecialchars($redirect_url); ?>" class="button">Kthehu te Profili</a>
+
 </div>
 </body>
 </html>

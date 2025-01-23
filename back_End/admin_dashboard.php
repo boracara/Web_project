@@ -42,7 +42,7 @@ $result = $conn->query($query);
                 <td><?= htmlspecialchars($row['email']) ?></td>
                 <td><?= htmlspecialchars($row['role']) ?></td>
                 <td class="actions">
-                    <a href="../back_End/user_dashboard.php?id=<?= $row['id'] ?>" class="btn btn-view">Shiko</a>
+                    <a href="../back_End/seeuser.php?id=<?= $row['id'] ?>" class="btn btn-view">Shiko Profilin</a>
                     <a href="../back_End/edit_user.php?id=<?= $row['id'] ?>" class="btn btn-edit">Modifiko</a>
                     <a href="../back_End/delete_user.php?id=<?= $row['id'] ?>" class="btn btn-delete" onclick="return confirm('Jeni të sigurt?')">Fshij</a>
                 </td>
@@ -57,6 +57,8 @@ $result = $conn->query($query);
     <nav>
         <ul>
             <li><a href="../back_End/admin_analysis.php">Analiza e Përdoruesve</a></li>
+
+            <a href="../front_End/entrance.html" class="button">Kthehu te Faqja Kryesore</a>
         </ul>
     </nav>
 </div>
